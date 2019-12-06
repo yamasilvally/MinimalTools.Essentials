@@ -1,7 +1,7 @@
 ﻿/*
  * Kv
  *
- * Copyright (c) 2018 Takahisa YAMASHIGE
+ * Copyright (c) 2019 Takahisa YAMASHIGE
  *
  * This software is released under the MIT License.
  * https://opensource.org/licenses/mit-license.php
