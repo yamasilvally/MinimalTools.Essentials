@@ -267,7 +267,7 @@ namespace MinimalTools.Extensions.Linq
                     }
                 }
 
-                if (buffer.Count > 0) yield return buffer.ToArray();
+                if (buffer.Any()) yield return buffer.ToArray();
             }
         }
 
@@ -298,7 +298,7 @@ namespace MinimalTools.Extensions.Linq
                     }
                     else
                     {
-                        if (buffer.Count > 0)
+                        if (buffer.Any())
                         {
                             yield return buffer.ToArray();
                             buffer.Clear();
@@ -306,7 +306,7 @@ namespace MinimalTools.Extensions.Linq
                     }
                 }
 
-                if (buffer.Count > 0) yield return buffer.ToArray();
+                if (buffer.Any()) yield return buffer.ToArray();
 
                 yield break;
             }
@@ -341,7 +341,7 @@ namespace MinimalTools.Extensions.Linq
                     {
                         isFirst = false;
                     }
-                    else if (!predicate(prev, item) && buffer.Count > 0)
+                    else if (!predicate(prev, item) && buffer.Any())
                     {
                         yield return buffer.ToArray();
                         buffer.Clear();
@@ -351,7 +351,7 @@ namespace MinimalTools.Extensions.Linq
                     prev = item;
                 }
 
-                if (buffer.Count > 0) yield return buffer.ToArray();
+                if (buffer.Any()) yield return buffer.ToArray();
 
                 yield break;
             }
@@ -391,7 +391,7 @@ namespace MinimalTools.Extensions.Linq
                     prevCondition = currentCondition;
                 }
 
-                if (buffer.Count > 0) yield return buffer.ToArray();
+                if (buffer.Any()) yield return buffer.ToArray();
 
                 yield break;
             }
@@ -829,6 +829,25 @@ namespace MinimalTools.Extensions.Linq
             IEnumerable<T> exec()
             {
                 if (sequence.Any()) while (true) foreach (var x in sequence) yield return x;
+            }
+        }
+
+        /// <summary>
+        /// Repeat a sequence.
+        /// </summary>
+        /// <typeparam name="T">A type of elements.</typeparam>
+        /// <param name="sequence">The sequence.</param>
+        /// <param name="repeatTimes">The repeating times</param>
+        /// <returns>After the last element of the sequence is returned, repeat from the beginning of the sequence by specified repeating times.</returns>
+        public static IEnumerable<T> Repeat<T>(this IEnumerable<T> sequence, int repeatTimes)
+        {
+            if (sequence == null) throw new ArgumentNullException(nameof(sequence));
+
+            return exec();
+
+            IEnumerable<T> exec()
+            {
+                for (int i = 0; i < repeatTimes; i++) foreach (var x in sequence) yield return x;
             }
         }
     }
